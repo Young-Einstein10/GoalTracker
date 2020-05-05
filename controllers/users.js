@@ -10,8 +10,8 @@ const getAllUsers = () => {};
 
 const getUserById = () => {};
 
-const signup = async (req, res) => {
-  const { firstname, lastname, username, email, password } = req.body;
+const signup = async (request, response) => {
+  const { firstname, lastname, username, email, password } = request.body;
 
   let hashedPass;
   try {
@@ -46,7 +46,7 @@ const signup = async (req, res) => {
       expiresIn: "7d",
     });
 
-    res.status(201).json({
+    response.status(201).json({
       status: "success",
       message: "User Account successfully created",
       token,
@@ -54,14 +54,62 @@ const signup = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    response.status(500).json({
       status: "error",
       error,
     });
   }
 };
 
-const signin = () => {};
+const signin = async (request, response) => {
+  const { email, password } = request.body;
+
+  try {
+    const { rows } = await pool.query("SELECT email FROM users");
+    const userEmail = rows.find((user) => user.email == email);
+
+    if (!userEmail) {
+      response.status(404).json({
+        status: "error",
+        error: "Email Not Registered",
+      });
+    }
+
+    const result = await pool.query(
+      `SELECT * FROM users WHERE email='${userEmail.email}'`
+    );
+
+    const validPass = await bcrypt.compare(password, result.rows[0].password);
+
+    if (!validPass) {
+      return response.status(401).json({
+        status: "error",
+        error: "Incorrect Password",
+      });
+    }
+
+    const token = await jwt.sign(
+      { userId: result.rows[0].id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    response.status(200).json({
+      status: "success",
+      data: {
+        userId: result.rows[0].id,
+        token,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({
+      status: "error",
+      error,
+    });
+  }
+};
+
 const deleteUser = () => {};
 const updateUser = () => {};
 
