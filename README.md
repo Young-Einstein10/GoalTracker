@@ -1,6 +1,6 @@
 # Goal Tracker App
 
-Goal Tracker is a personal development app which in which a user can add and manage projects or goals which they have in mind over time.
+Goal Tracker is a personal development app in which a user can add and manage projects or goals which they have in mind over time.
 
 ## Goal:
 
