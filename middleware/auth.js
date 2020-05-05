@@ -11,7 +11,6 @@ export default (request, response, next) => {
       error: "Authorization Token Absent",
     });
   }
-
   const [, token] = authToken.split(" ");
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
