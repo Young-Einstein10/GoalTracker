@@ -30,7 +30,7 @@ Set up the node/express server and RESTful API, then persist the data with Postg
 
 ## API Documentation
 
-Docs in Progress
+Docs in [here](https://documenter.getpostman.com/view/9319091/SzmcZJBU?version=latest)
 
 ## Author
 

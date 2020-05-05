@@ -96,6 +96,7 @@ const updateGoal = async (request, response) => {
 
     response.status(201).json({
       status: "success",
+      message: "Goal Updated Successfully",
       data: rows,
     });
   } catch (error) {
@@ -210,6 +211,7 @@ const updateTodo = async (request, response) => {
 
     response.status(201).json({
       status: "success",
+      message: "todo updated successfully",
       data: rows,
     });
   } catch (error) {

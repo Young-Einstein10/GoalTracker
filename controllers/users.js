@@ -179,11 +179,11 @@ const deleteUser = async (request, response) => {
       });
     }
 
-    const results = await pool.query("DELETE FROM users WHERE id = $1", [
+    const delTodo = await pool.query("DELETE FROM goals WHERE user_id = $1", [
       user_id,
     ]);
 
-    const delTodo = await pool.query("DELETE FROM goals WHERE user_id = $1", [
+    const results = await pool.query("DELETE FROM users WHERE id = $1", [
       user_id,
     ]);
 
@@ -208,12 +208,13 @@ const updateUser = async (request, response) => {
     const {
       rows,
     } = await pool.query(
-      `UPDATE users SET firstname = $1, lastname = $2, username = $3, email = $4 WHERE id = '${user_id}' RETURNING *`,
-      [firstname, lastname, username, email]
+      "UPDATE users SET firstname = $1, lastname = $2, username = $3, email = $4 WHERE id = $5 RETURNING *",
+      [firstname, lastname, username, email, user_id]
     );
 
     response.status(201).json({
       status: "success",
+      message: "User updated successfully",
       data: rows,
     });
   } catch (error) {
