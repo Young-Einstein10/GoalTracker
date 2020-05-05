@@ -6,9 +6,63 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const getAllUsers = () => {};
+const getAllUsers = async (request, response) => {
+  try {
+    const { rows } = await pool.query(
+      "SELECT * FROM users ORDER BY created_on DESC"
+    );
 
-const getUserById = () => {};
+    if (rows.length === 0) {
+      response.status(404).json({
+        status: "error",
+        error: "No Users found",
+      });
+    }
+    response.status(200).json({
+      status: "success",
+      data: rows,
+    });
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({
+      status: "error",
+      error,
+    });
+  }
+};
+
+const getUserById = async (request, response) => {
+  const user_id = request.params.id;
+  let goal;
+  try {
+    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [
+      user_id,
+    ]);
+    if (!rows[0]) {
+      response.status(404).json({
+        status: "error",
+        error: "User Not Found",
+      });
+    }
+    const goals = await pool.query("SELECT * FROM goals WHERE user_id = $1", [
+      user_id,
+    ]);
+
+    const users = rows[0];
+    goal = [{ ...users, goals: goals.rows }];
+
+    response.status(200).json({
+      status: "success",
+      data: goal,
+    });
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({
+      status: "error",
+      error,
+    });
+  }
+};
 
 const signup = async (request, response) => {
   const { firstname, lastname, username, email, password } = request.body;
@@ -110,7 +164,66 @@ const signin = async (request, response) => {
   }
 };
 
-const deleteUser = () => {};
-const updateUser = () => {};
+const deleteUser = async (request, response) => {
+  const user_id = request.params.id;
+
+  try {
+    // Check If User is present in DB
+    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [
+      user_id,
+    ]);
+    if (!rows[0]) {
+      response.status(404).json({
+        status: "error",
+        error: "User Not Found",
+      });
+    }
+
+    const results = await pool.query("DELETE FROM users WHERE id = $1", [
+      user_id,
+    ]);
+
+    const delTodo = await pool.query("DELETE FROM goals WHERE user_id = $1", [
+      user_id,
+    ]);
+
+    response.status(200).json({
+      status: "success",
+      message: `User deleted with <ID: ${user_id}>`,
+    });
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({
+      status: "error",
+      error,
+    });
+  }
+};
+
+const updateUser = async (request, response) => {
+  const user_id = request.params;
+  const { firstname, lastname, username, email } = request.body;
+
+  try {
+    const {
+      rows,
+    } = await pool.query(
+      `UPDATE users SET firstname = $1, lastname = $2, username = $3, email = $4 WHERE id = '${user_id}' RETURNING *`,
+      [firstname, lastname, username, email]
+    );
+
+    response.status(201).json({
+      status: "success",
+      data: rows,
+    });
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({
+      status: "error",
+      message: "Error Updating Users",
+      error,
+    });
+  }
+};
 
 export { getAllUsers, getUserById, signin, signup, deleteUser, updateUser };
