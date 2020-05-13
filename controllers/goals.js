@@ -3,8 +3,11 @@ import { v4 as uuidv4 } from "uuid";
 
 const getAllGoals = async (request, response) => {
   try {
-    const { rows } = await pool.query(
-      "SELECT * FROM goals ORDER BY created_on DESC"
+    const {
+      rows,
+    } = await pool.query(
+      "SELECT * FROM goals WHERE user_id = $1 ORDER BY created_on ASC",
+      [request.userId]
     );
 
     if (rows.length === 0) {
@@ -21,6 +24,7 @@ const getAllGoals = async (request, response) => {
     console.log(error);
     response.status(500).json({
       status: "error",
+      message: "Error Fetching Goals",
       error,
     });
   }
@@ -39,9 +43,10 @@ const getGoalById = async (request, response) => {
         error: "Goal Not Found",
       });
     }
-    const todos = await pool.query("SELECT * FROM todos WHERE goal_id = $1", [
-      goal_id,
-    ]);
+    const todos = await pool.query(
+      "SELECT * FROM todos WHERE goal_id = $1 ORDER BY created_on ASC",
+      [goal_id]
+    );
 
     const goals = rows[0];
     goal = [{ ...goals, todos: todos.rows }];
@@ -133,7 +138,7 @@ const deleteGoal = async (request, response) => {
 
     response.status(200).json({
       status: "success",
-      message: `Goal deleted with <ID: ${goal_id}>`,
+      message: `Goal deleted with ID: ${goal_id}`,
     });
   } catch (error) {
     console.log(error);
@@ -187,7 +192,7 @@ const deleteTodo = async (request, response) => {
 
     response.status(200).json({
       status: "success",
-      message: `Goal deleted with <ID: ${todos_id}>`,
+      message: `Goal deleted with ID: ${todos_id}`,
     });
   } catch (error) {
     console.log(error);
@@ -215,6 +220,7 @@ const updateTodo = async (request, response) => {
       data: rows,
     });
   } catch (error) {
+    console.log(error);
     response.status(500).json({
       status: "error",
       message: "Error Updating Todo",
