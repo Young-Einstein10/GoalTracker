@@ -29,7 +29,7 @@ app.use(helmet());
 app.use(compression());
 
 app.get("/", (request, response) => {
-  response.json({ info: "Node.js, Express, and Postgres API" });
+  response.json({ info: "Goal Tracker is live and running 🎉🎉🎉" });
 });
 
 // User Routes
