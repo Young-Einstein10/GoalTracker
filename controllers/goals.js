@@ -128,11 +128,11 @@ const deleteGoal = async (request, response) => {
       });
     }
 
-    const results = await pool.query("DELETE FROM goals WHERE id = $1", [
+    const delTodo = await pool.query("DELETE FROM todos WHERE goal_id = $1", [
       goal_id,
     ]);
 
-    const delTodo = await pool.query("DELETE FROM todos WHERE goal_id = $1", [
+    const results = await pool.query("DELETE FROM goals WHERE id = $1", [
       goal_id,
     ]);
 
