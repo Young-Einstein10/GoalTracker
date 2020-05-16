@@ -88,7 +88,7 @@ const createTodo = async (request, response) => {
 };
 
 const updateGoal = async (request, response) => {
-  const goal_id = request.params;
+  const goal_id = request.params.id;
   const { body, is_achieved } = request.body;
 
   try {

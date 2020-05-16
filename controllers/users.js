@@ -205,7 +205,7 @@ const deleteUser = async (request, response) => {
 };
 
 const updateUser = async (request, response) => {
-  const user_id = request.params;
+  const user_id = request.params.id;
   const { firstname, lastname, username, email } = request.body;
 
   try {
