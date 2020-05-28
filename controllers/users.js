@@ -103,8 +103,14 @@ const signup = async (request, response) => {
     response.status(201).json({
       status: "success",
       message: "User Account successfully created",
-      token,
-      data: rows,
+      data: {
+        token,
+        firstname: rows[0].firstname,
+        lastname: rows[0].lastname,
+        username: rows[0].username,
+        email: rows[0].email,
+        created_on: rows[0].created_on,
+      },
     });
   } catch (error) {
     console.log(error);
