@@ -28,6 +28,28 @@ Set up the node/express server and RESTful API, then persist the data with Postg
 - User can mark task complete/incomplete.
 - User can view percentage of task completed.
 
+## Getting Started
+
+### Installation
+
+- Clone this repository into your local machine:
+
+```
+ git clone https://github.com/Young-Einstein10/GoalTracker.git
+```
+
+- Install dependencies:
+
+```
+yarn install or npm install
+```
+
+- To start the application:
+
+```
+e.g npm start
+```
+
 ## API Documentation
 
 Docs in [here](https://documenter.getpostman.com/view/9319091/SzmcZJBU?version=latest)
