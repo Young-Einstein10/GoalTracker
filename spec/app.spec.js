@@ -5,7 +5,7 @@ import * as DB from "../test_db";
 describe("User can", () => {
   beforeAll(() => {
     // DB.dropAllTables();
-    // DB.createSchema();
+    DB.createSchema();
     DB.createAllTables();
   });
 
