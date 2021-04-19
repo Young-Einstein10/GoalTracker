@@ -47,7 +47,7 @@ const dropSchema = () => {
 
 const createAllTables = () => {
   const queryText = `
-    CREATE TABLE users 
+    CREATE TABLE users
     (
         email VARCHAR(255) UNIQUE NOT NULL,
         firstname VARCHAR(25) NOT NULL,
@@ -56,8 +56,8 @@ const createAllTables = () => {
         lastname VARCHAR(25) NOT NULL,
         password VARCHAR(255) NOT NULL,
         created_on TIMESTAMP NOT NULL
-    ); 
-    
+    );
+
     CREATE TABLE goals
     (
       id VARCHAR(255) UNIQUE PRIMARY KEY,
