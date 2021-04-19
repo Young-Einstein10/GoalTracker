@@ -1,10 +1,12 @@
 # Goal Tracker App
 
-Goal Tracker is a personal development app in which a user can add and manage projects or goals which they have in mind over time.
+Goal Tracker is a personal development app in which a user can add and manage
+projects or goals which they have in mind over time.
 
 ## Goal:
 
-Set up the node/express server and RESTful API, then persist the data with PostgreSQL.
+Set up the node/express server and RESTful API, then persist the data with
+PostgreSQL.
 
 ## What Technologies are Needed:
 
@@ -52,7 +54,8 @@ e.g npm start
 
 ## API Documentation
 
-Docs in [here](https://documenter.getpostman.com/view/9319091/SzmcZJBU?version=latest)
+Docs in
+[here](https://documenter.getpostman.com/view/9319091/SzmcZJBU?version=latest)
 
 ## Author
 
