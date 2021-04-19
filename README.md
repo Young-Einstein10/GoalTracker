@@ -6,7 +6,7 @@ Goal Tracker is a personal development app in which a user can add and manage pr
 
 Set up the node/express server and RESTful API, then persist the data with PostgreSQL.
 
-## What Technologies Is Needed:
+## What Technologies are Needed:
 
 - Javascript (ES6)
 - NodeJS/Express <small>Server-side programming</small>

@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const TEST_DB_URL = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.TEST_DB_NAME}`;
+const TEST_DB_URL = `postgresql://${process.env.TEST_DB_USER}:${process.env.TEST_DB_PASSWORD}@${process.env.TEST_DB_HOST}:${process.env.TEST_DB_PORT}/${process.env.TEST_DB_NAME}`;
 
 const pool = new Pool({
   connectionString: TEST_DB_URL,
@@ -15,15 +15,6 @@ pool.on("connect", () => {
 
 const createSchema = async () => {
   const queryText = `CREATE SCHEMA tracker`;
-
-  // try {
-  //   const response = await pool.query(queryText);
-  //   console.log(response);
-  //   pool.end()
-  // } catch (error) {
-  //   console.log(error);
-  //   pool.end()
-  // }
 
   pool
     .query(queryText)
@@ -56,7 +47,7 @@ const dropSchema = () => {
 
 const createAllTables = () => {
   const queryText = `
-    CREATE TABLE users IF NOT EXIST 
+    CREATE TABLE users 
     (
         email VARCHAR(255) UNIQUE NOT NULL,
         firstname VARCHAR(25) NOT NULL,
