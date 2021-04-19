@@ -9,21 +9,21 @@ describe("User can", () => {
     DB.createAllTables();
   });
 
-  afterAll(() => {
-    DB.dropAllTables();
-  });
+  afterAll(() => { DB.dropAllTables(); });
 
   describe("POST api/v1/users/signin", () => {
-    it("should return a 200 success when user logs in with correct email and password", async () => {
-      const user = {
-        email: "john@gmail.com",
-        password: "123456",
-      };
-      const res = await request(app).post("/api/v1/users/signin").send(user);
+    it("should return a 200 success when user logs in with correct email and password",
+       async () => {
+         const user = {
+           email : "john@gmail.com",
+           password : "123456",
+         };
+         const res = await request(app).post("/api/v1/users/signin").send(user);
 
-      expect(res.status).toBe(200);
-      expect(res.body).toEqual(jasmine.objectContaining({ status: "success" }));
-    });
+         expect(res.status).toBe(200);
+         expect(res.body).toEqual(
+             jasmine.objectContaining({status : "success"}));
+       });
   });
 
   describe("GET /", () => {
@@ -31,17 +31,15 @@ describe("User can", () => {
       const response = await request(app).get("/");
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(
-        jasmine.objectContaining({
-          info: "Goal Tracker is live and running 🎉🎉🎉",
-        })
-      );
+      expect(response.body).toEqual(jasmine.objectContaining({
+        info : "Goal Tracker is live and running 🎉🎉🎉",
+      }));
     });
   });
 });
 
 function tellJasmine(done) {
-  return function (err) {
+  return function(err) {
     if (err) {
       done.fail(err);
     } else {
