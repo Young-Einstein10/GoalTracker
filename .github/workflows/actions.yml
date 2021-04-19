@@ -4,8 +4,6 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [master]
 
@@ -15,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.15.0]
 
     steps:
       - uses: actions/checkout@v2
@@ -23,5 +21,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn
-      - run: yarn run build --if-present
+      - name: yarn install
+        run: yarn
+
+      - uses: akhileshns/heroku-deploy@v3.3.6 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "einstein-goal-tracker" #Must be unique in Heroku
+          heroku_email: "aabdulrahmanyusuf@gmail.com"

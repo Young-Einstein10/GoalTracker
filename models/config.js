@@ -16,6 +16,9 @@ const DB_URL =
 
 const pool = new Pool({
   connectionString: DB_URL,
+  ssl: {
+    rejectUnauthorized: true,
+  },
 });
 
 if (DB_URL == TEST_DB_URL) {
